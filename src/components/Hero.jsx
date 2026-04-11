@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Facebook, Twitter, Instagram } from 'lucide-react';
+import { Search, ChevronDown, Menu } from 'lucide-react';
 
 const Hero = () => {
   return (
@@ -51,11 +51,21 @@ const Hero = () => {
           </button>
 
           {/* Social Icons */}
-          <div className="flex gap-6 mt-12 text-gray-400">
-            <Facebook size={20} className="hover:text-white cursor-pointer transition" />
-            <Instagram size={20} className="hover:text-white cursor-pointer transition" />
-            <Twitter size={20} className="hover:text-white cursor-pointer transition" />
-          </div>
+          {/* Social Icons - Clean SVGs to fix Lucide Error */}
+<div className="flex gap-6 mt-12 text-gray-400">
+  {/* Facebook */}
+  <svg className="w-5 h-5 hover:text-white cursor-pointer transition fill-current" viewBox="0 0 24 24">
+    <path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/>
+  </svg>
+  {/* Instagram/Pinterest Circle */}
+  <svg className="w-5 h-5 hover:text-white cursor-pointer transition fill-current" viewBox="0 0 24 24">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+  </svg>
+  {/* Twitter/X */}
+  <svg className="w-5 h-5 hover:text-white cursor-pointer transition fill-current" viewBox="0 0 24 24">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
+  </svg>
+</div>
         </motion.div>
 
         {/* Right Side: Circular Image Composition */}
