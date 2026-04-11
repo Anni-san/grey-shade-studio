@@ -1,83 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700&family=Inter:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Standard body settings from previous instructions */
 body {
-  @apply bg-[#0a0a0a] text-grey-light m-0 p-0;
-  font-family: 'Inter', sans-serif; /* Set default sans font */
+  @apply bg-dark text-white m-0 p-0;
+  font-family: 'Inter', sans-serif;
 }
 
-/* New, sophisticated royal text classes */
-.text-outline-gold {
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 1.2px rgba(196, 167, 125, 0.8); /* Brushed gold outline color */
+.text-outline {
+  -webkit-text-stroke: 2px white;
   color: transparent;
-  font-family: 'Bodoni Moda', serif;
-  text-shadow: 0 0 1px rgba(196, 167, 125, 0.4); /* Subtle gold glow */
-}
-
-.text-royal-fill {
-    @apply text-royal-gold;
-    font-family: 'Bodoni Moda', serif;
-}
-
-/* Carrara marble texture with subtle gold veining */
-.carrara-gold-texture {
-    @apply bg-carrara-gold bg-[#121212] bg-blend-soft-light opacity-95; /* Deeptextured charcoal with subtle layered linen for Carrara effect and blend on solid left */
-    /* Subtle filigree corner accents */
-    background-image: url('https://www.transparenttextures.com/patterns/dark-linen.png'), url('https://www.transparenttextures.com/patterns/black-linen-2.png'),
-                      radial-gradient(circle at top left, rgba(196, 167, 125, 0.05) 0%, transparent 10%),
-                      radial-gradient(circle at bottom right, rgba(196, 167, 125, 0.05) 0%, transparent 10%);
-    background-size: 100px 100px, 200px 200px, 100% 100%, 100% 100%;
-    background-position: 0 0, 0 0, -10px -10px, -10px -10px;
-    background-repeat: repeat, repeat, no-repeat, no-repeat;
-    background-blend-mode: soft-light, soft-light, multiply, multiply;
-}
-
-/* Refined separator line style with brushed metal pinstripe and subtle glow */
-.premium-pinstripe {
-    @apply h-[1.5px] bg-royal-gold relative shadow-[0_0_1px_rgba(196,167,125,0.4)];
-}
-.premium-pinstripe::after {
-    content: '';
-    @apply absolute -left-[2px] -right-[2px] -top-[1.5px] h-[4px] bg-royal-brass opacity-10 blur-[0.5px]; /* Subtle brass underglow */
-}
-
-/* Refined glass navbar with functional blending and subtle metallic bead border */
-.glass-nav {
-  @apply bg-black/60 backdrop-blur-xl rounded-2xl shadow-xl border border-gray-950 bg-blend-multiply relative;
-  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.4), 0 4px 6px -2px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05); /* Deep shadow with subtle metallic top bead effect from config accent */
-}
-
-/* Hover micro-animations and custom link styles, refined for white/gold blend */
-nav a {
-  position: relative;
-  transition: color 0.3s ease;
-  @apply text-white; /* Clean white nav text from previous turns */
-}
-
-nav a::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 1.5px;
-  display: block;
-  margin-top: 4px;
-  right: 0;
-  background: white;
-  transition: width 0.3s ease;
-  -webkit-transition: width 0.3s ease;
-}
-
-nav a:hover {
-    @apply text-royal-gold; /* Subtly shift color on hover to mix gold and white effectively */
-}
-
-nav a:hover::after {
-  width: 100%;
-  left: 0;
-  background: theme('colors.royal.gold'); /* Brushed gold underline for interaction */
 }
