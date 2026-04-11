@@ -1,14 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.grainy-bg {
-  background-color: #f2f0ef;
-  background-image: url("https://www.transparenttextures.com/patterns/felt-tip.png");
+body {
+  @apply bg-black text-white overflow-x-hidden;
 }
 
-.serif-text {
-  font-family: 'Playfair Display', serif;
+/* Gold border for the "Read More" and "Book Now" buttons */
+.btn-outline-gold {
+  @apply border border-[#b09476] px-6 py-2 uppercase text-xs tracking-widest hover:bg-[#b09476] hover:text-black transition-all duration-300;
+}
+
+/* Circular graphic behind the subject */
+.circle-bg {
+  border: 40px solid #111;
+  border-radius: 50%;
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  z-index: 0;
 }
