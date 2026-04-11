@@ -1,58 +1,136 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight } from 'lucide-react';
 
 const Appointment = ({ isOpen, onClose }) => {
+  const [isHoveringImg, setIsHoveringImg] = useState(false);
+
+  // Animation variants for the "Staggered" smooth entry
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.8, 
+        delayChildren: 0.3, 
+        staggerChildren: 0.1 
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  };
+
   return (
-    <motion.div
-      initial={{ y: "100%" }}
-      animate={{ y: isOpen ? 0 : "100%" }}
-      transition={{ type: "spring", damping: 30, stiffness: 150 }}
-      className="fixed inset-0 z-[1000] bg-[#f2f0ef] grainy-paper text-[#1a1817] p-8 md:p-20 overflow-y-auto"
-    >
-      <button 
-        onClick={onClose} 
-        className="absolute top-10 right-10 hover:rotate-90 transition-transform duration-300 z-[1001]"
-      >
-        <X size={40} strokeWidth={1} />
-      </button>
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[1000] bg-[#050505] text-white flex items-center justify-center overflow-hidden"
+        >
+          {/* Smooth Background Slide */}
+          <motion.div 
+            initial={{ scaleY: 0 }}
+            animate={{ scaleY: 1 }}
+            exit={{ scaleY: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0 bg-[#050505] origin-top"
+          />
 
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center min-h-full">
-        <div className="relative z-10">
-          <span className="uppercase tracking-[0.4em] text-[10px] font-bold text-gray-400 mb-10 block font-sans">Booking — Request</span>
-          
-          <h2 className="text-7xl md:text-9xl font-serif-premium leading-[0.9] mb-12">
-            Capturing <br /> your <span className="text-[#b09476] italic">Priceless</span> <br /> Emotions.
-          </h2>
+          {/* Close Button */}
+          <button 
+            onClick={onClose} 
+            className="absolute top-8 right-8 hover:rotate-90 transition-transform duration-500 z-[1001] text-white/50 hover:text-white"
+          >
+            <X size={40} strokeWidth={1} />
+          </button>
 
-          <div className="space-y-8 max-w-md">
-            <input type="text" placeholder="Full Name" className="w-full bg-transparent border-b border-gray-300 py-4 outline-none font-serif-premium text-2xl placeholder:text-gray-300" />
-            <input type="email" placeholder="Email Address" className="w-full bg-transparent border-b border-gray-300 py-4 outline-none font-serif-premium text-2xl placeholder:text-gray-300" />
+          {/* Content Wrapper - Centered to fit one page */}
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center w-full px-8 md:px-16 z-10"
+          >
             
-            <div className="flex gap-10 mt-16 items-center">
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                className="w-44 h-44 rounded-full bg-[#1a1817] text-white flex flex-col items-center justify-center gap-3 shadow-2xl"
-              >
-                <span className="text-xs uppercase tracking-widest font-bold">Book Now</span>
-                <ArrowRight size={20} />
-              </motion.button>
-              <p className="text-sm text-gray-500 italic max-w-[200px] font-serif-premium">
-                "Why be ordinary when you can be extraordinary?"
-              </p>
-            </div>
-          </div>
-        </div>
+            {/* LEFT: FORM & TEXT */}
+            <div className="flex flex-col justify-center">
+              <motion.span variants={itemVariants} className="uppercase tracking-[0.4em] text-[10px] font-bold text-[#b09476] mb-4 block">
+                Booking — Request
+              </motion.span>
+              
+              <motion.h2 variants={itemVariants} className="text-6xl md:text-7xl font-black leading-[0.95] uppercase tracking-tighter mb-8">
+                Capturing <br /> 
+                your <span className="text-[#b09476] italic font-light">Priceless</span> <br /> 
+                Emotions.
+              </motion.h2>
 
-        <div className="relative h-[600px] w-full hidden lg:block">
-           <img 
-            src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2071" 
-            className="w-full h-full object-cover rounded-[60px] grayscale"
-            style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 5% 100%)' }}
-           />
-        </div>
-      </div>
-    </motion.div>
+              <div className="space-y-4 max-w-md">
+                <motion.div variants={itemVariants} className="group relative">
+                  <input 
+                    type="text" 
+                    placeholder="Full Name" 
+                    className="w-full bg-transparent border-b border-white/10 py-3 outline-none font-sans text-lg placeholder:text-white/20 focus:border-[#b09476] transition-colors" 
+                  />
+                </motion.div>
+                <motion.div variants={itemVariants} className="group relative">
+                  <input 
+                    type="email" 
+                    placeholder="Email Address" 
+                    className="w-full bg-transparent border-b border-white/10 py-3 outline-none font-sans text-lg placeholder:text-white/20 focus:border-[#b09476] transition-colors" 
+                  />
+                </motion.div>
+                
+                <motion.div variants={itemVariants} className="flex gap-10 mt-8 items-center">
+                  <motion.button 
+                    whileHover={{ scale: 1.05, backgroundColor: "#ffffff", color: "#000000" }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-32 h-32 rounded-full border border-white/20 flex flex-col items-center justify-center gap-2 transition-colors duration-500"
+                  >
+                    <span className="text-[9px] uppercase tracking-widest font-black">Book Now</span>
+                    <ArrowRight size={16} />
+                  </motion.button>
+                  
+                  <p className="text-[10px] text-white/40 italic max-w-[150px] leading-relaxed uppercase tracking-wider">
+                    "Why be ordinary when you can be extraordinary?"
+                  </p>
+                </motion.div>
+              </div>
+            </div>
+
+            {/* RIGHT: INTERACTIVE IMAGE */}
+            <motion.div 
+              variants={itemVariants}
+              className="relative h-[650px] w-full hidden lg:block"
+              onMouseEnter={() => setIsHoveringImg(true)}
+              onMouseLeave={() => setIsHoveringImg(false)}
+            >
+               <div className="absolute inset-0 border border-[#b09476]/20 rounded-[30px] translate-x-3 translate-y-3"></div>
+               
+               <motion.div 
+                 className="w-full h-full overflow-hidden rounded-[30px] relative z-10 border border-white/10 shadow-2xl"
+                 animate={{ scale: isHoveringImg ? 0.98 : 1 }}
+               >
+                 <motion.img 
+                  src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2071" 
+                  className="w-full h-full object-cover"
+                  animate={{ 
+                    filter: isHoveringImg ? 'grayscale(0%) brightness(1)' : 'grayscale(100%) brightness(0.6)',
+                  }}
+                  transition={{ duration: 0.7 }}
+                 />
+                 <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent transition-opacity duration-500 ${isHoveringImg ? 'opacity-0' : 'opacity-100'}`} />
+               </motion.div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
