@@ -2,18 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ChevronDown } from 'lucide-react';
 
-// Extremely high-end, luxury placeholder images with palatial captions
 const sliderImages = [
-  { url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069&auto=format&fit=crop", caption: "Bespoke narratives for the modern maestro." }, 
-  { url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop", caption: "Timeless portraiture. Elevated artistry." }, 
-  { url: "https://images.unsplash.com/photo-1600096194534-95cf5ece04cf?q=80&w=1976&auto=format&fit=crop", caption: "Integrated cinematic grades for your unique vision." },
-  { url: "https://images.unsplash.com/photo-1581338834647-b0fb40704e21?q=80&w=1974&auto=format&fit=crop", caption: "Undeniable craftsmanship. Beyond monochrome." },
+  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069&auto=format&fit=crop", 
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop", 
+  "https://images.unsplash.com/photo-1600096194534-95cf5ece04cf?q=80&w=1976&auto=format&fit=crop"  
 ];
 
 const Hero = () => {
   const [currentImage, setCurrentImage] = useState(0);
 
-  // 3-second Image Loop Logic
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImage((prev) => (prev === sliderImages.length - 1 ? 0 : prev + 1));
@@ -22,114 +19,89 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-screen bg-[#0a0a0a] overflow-hidden font-sans">
+    <div className="relative w-full h-screen bg-dark overflow-hidden">
       
-      {/* Full-bleed Immersive integrated image slideshow layer (Z-0) */}
-      <div className="absolute inset-0 z-0 overflow-hidden origin-center bg-blend-multiply opacity-90">
+      {/* Right Panel: Clean Image Slider (60% width) */}
+      <div className="absolute top-0 right-0 w-[60%] h-full z-0">
         <AnimatePresence mode="wait">
           <motion.img
             key={currentImage}
-            src={sliderImages[currentImage].url}
+            src={sliderImages[currentImage]}
             alt="Studio Showcase"
-            initial={{ opacity: 0, scale: 1.15 }} // Enhanced Ken Burns start
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.4, ease: "easeInOut" }}
-            className="absolute inset-0 w-full h-full object-coverorigin-center"
+            transition={{ duration: 1.2, ease: "easeInOut" }}
+            className="absolute inset-0 w-full h-full object-cover"
           />
         </AnimatePresence>
-        {/* Subtly transparent gold blend overlay across image layer */}
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-[0.5px] bg-blend-multiply opacity-80 radial-gradient(circle at center, rgba(196, 167, 125, 0.05) 0%, transparent 60%)"></div>
+        {/* Simple dark overlay to ensure text readability */}
+        <div className="absolute inset-0 bg-black/30"></div>
       </div>
 
-      {/* Textured palatial text container integrated into the image panel (Z-10, approx 45% width) */}
-      <div className="absolute top-0 left-0 w-[45%] h-full z-10 carrara-gold-texture border-r border-gray-950 flex flex-col justify-end p-20 pb-32">
-        {/* Soft, textured Carrara blend area near the integrated edge */}
-        <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-[#0a0a0a]/95 to-transparent z-0 opacity-80 radial-gradient(circle at bottom center, rgba(196, 167, 125, 0.01) 0%, transparent 30%)"></div>
+      {/* Floating Navbar (Z-50) */}
+      <nav className="absolute top-0 w-full z-50 flex justify-between items-center px-12 py-8 text-white bg-gradient-to-b from-black/50 to-transparent">
+        <div className="flex items-center gap-4">
+          <div className="text-3xl font-black tracking-tighter">G</div>
+          <div className="w-[1px] h-8 bg-gray-500"></div>
+          <div className="flex flex-col justify-center">
+            <span className="text-base font-bold leading-none tracking-wide mb-1">Gray Shade Studios</span>
+            <span className="text-[0.6rem] tracking-[0.2em] text-gray-400 uppercase">Beyond Monochrome</span>
+          </div>
+        </div>
         
-        {/* Metallic brushed gold integrated logo emblem */}
-        <div className="absolute top-1/2 -translate-y-1/2 -right-48 text-[20rem] font-black text-gray-950/30 select-none z-0 tracking-tighter radial-gradient(circle at center, rgba(196, 167, 125, 0.1) 0%, transparent 40%)">G</div>
+        <div className="flex items-center gap-12">
+          <ul className="flex gap-8 text-sm font-medium tracking-wide">
+            <li className="cursor-pointer hover:text-gray-400 transition">Home</li>
+            <li className="cursor-pointer hover:text-gray-400 transition">About</li>
+            <li className="cursor-pointer hover:text-gray-400 transition">Blogs</li>
+            <li className="cursor-pointer hover:text-gray-400 transition">Contact Us</li>
+            <li className="cursor-pointer hover:text-gray-400 transition flex items-center gap-1">
+              Portfolio <ChevronDown size={16} />
+            </li>
+          </ul>
+          <Search className="cursor-pointer hover:text-gray-400 transition" size={20} />
+        </div>
+      </nav>
 
-        {/* Dynamic refined palatial caption that changes with each image */}
-        <motion.div
-            key={currentImage}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.8 }}
-            className="z-10"
-        >
-            <p className="text-gray-500 text-sm tracking-[0.25em] font-medium leading-loose max-w-sm mb-6 uppercase">
-              Beyond Monochrome
-            </p>
-            {/* Clean white separator line with functional blending */}
-            <div className="w-12 h-[2px] bg-white mb-6 bg-blend-multiply opacity-80"></div>
-            <p className="text-2xl font-extrabold tracking-widest text-white leading-snug">
-              {sliderImages[currentImage].caption}
-            </p>
-        </motion.div>
-
-      </div>
-
-      {/* Floating palatial glass navbar (Z-50) */}
-      {/* Centered glassmorphism navbar with functional blending and subtle metallic bead effect from config accent */}
-      <div className="absolute top-10 w-full z-50 flex justify-center items-center">
-        <nav className="glass-nav flex justify-between items-center px-12 py-6 text-white w-[90%] max-w-7xl">
-            
-            {/* Premium Integrated Logo Layout with refined serif heading */}
-            <div className="flex items-center gap-4">
-              <div className="text-4xl font-bold tracking-tighter text-white font-heading">G</div>
-              <div className="w-[1px] h-10 bg-gray-600"></div>
-              <div className="flex flex-col justify-center">
-                <span className="text-lg font-bold leading-none tracking-wide mb-1 font-heading text-white">Gray Shade Studios</span>
-                <span className="text-[0.6rem] tracking-[0.25em] text-gray-400 uppercase">Beyond Monochrome</span>
-              </div>
-            </div>
-            
-            {/* Custom interactive classical navigation links with white/gold blend effective mixing */}
-            <div className="flex items-center gap-12">
-              <ul className="flex gap-8 text-sm font-medium tracking-wide font-sans text-white">
-                <li className="cursor-pointer transition"><a href="#">Home</a></li>
-                <li className="cursor-pointer transition"><a href="#">About</a></li>
-                <li className="cursor-pointer transition"><a href="#">Blogs</a></li>
-                <li className="cursor-pointer transition"><a href="#">Contact Us</a></li>
-                <li className="cursor-pointer transition flex items-center gap-1">
-                  Portfolio <ChevronDown size={16} />
-                </li>
-              </ul>
-              <Search className="cursor-pointer hover:text-gray-300 transition" size={20} />
-            </div>
-        </nav>
-      </div>
-
-      {/* Main Palatial Overlapping Typography (Z-10) */}
-      {/* Classic Bodoni stacked serif heading with sophisticated translucent gold outline blending and multi-layered glow effective mixing and translucent texture fill to blend effective mixing with image panel colors and multi-layered effect mixing */}
+      {/* Clean, Breakout Typography (Z-10) */}
       <div className="absolute top-1/2 -translate-y-1/2 left-[8%] z-10 w-full pointer-events-none">
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
         >
-          {/* Enhancedheading text with multi-layered glow multi-effect mixing blend effective mixing and translucent texture fill to blend effective mixing with image panel colors and multi-layered effect mixing and multi-effect multi-effect multi-effect multi-layered glow and multi-layered glow multi-effect mixing */}
-          <h1 className="text-[9.5rem] font-bold leading-[0.9] tracking-tight text-white whitespace-nowrap font-heading relative shadow-[0_0_1px_rgba(255,255,255,0.05),_0_0_2px_rgba(255,255,255,0.03),_0_0_5px_rgba(255,255,255,0.01)] text-shadow-white-layered text-shadow-glow text-shadow-glow">
-            {/* Refined stacked stacked stacked serif heading with refined stacked serif heading stacked stacked packed stacked serif heading stacked stacked packed stacked serif heading multi-layered effect multi-effect blending with multi-layered glow multi-effect mixing blend with image panel colors and multi-layered effect mixing */}
-            <span className="text-white fill-current inline-block pb-1 relative z-10 text-shadow-white-layered text-shadow-glow">Gray</span><br />
-            <span className="text-outline-gold font-normal -mt-4 ml-6 inline-block z-0 text-shadow-glow text-shadow-glow">Shade</span><br />
-            <span className="text-outline-gold font-normal -mt-3 inline-block z-0 text-shadow-glow text-shadow-glow">Studios</span>
+          <h1 className="text-[8rem] font-black leading-[1.05] tracking-tight text-white whitespace-nowrap uppercase">
+            Gray <span className="text-outline ml-4">Shade</span><br />
+            <span className="text-outline">Studios</span>
           </h1>
         </motion.div>
       </div>
 
-      {/* Floating palatial WhatsApp Button (Z-50) */}
-      {/* Refined green from config accent is more integrated for royal effect */}
+      {/* Bottom Left Content (Z-20) */}
+      <div className="absolute bottom-12 left-[8%] z-20">
+        <div className="flex items-center gap-6 mb-8">
+          <div className="w-10 h-[2px] bg-white"></div>
+          <p className="uppercase tracking-widest text-sm font-bold text-white">
+            Capturing Masterpiece
+          </p>
+        </div>
+        
+        <div className="flex gap-6 text-gray-400 items-center">
+          <svg className="w-5 h-5 hover:text-white cursor-pointer transition fill-current" viewBox="0 0 24 24"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/></svg>
+          <svg className="w-5 h-5 hover:text-white cursor-pointer transition fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          <svg className="w-5 h-5 hover:text-white cursor-pointer transition fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </div>
+      </div>
+
+      {/* Floating WhatsApp Button */}
       <a 
         href="https://wa.me/1234567890" 
         target="_blank" 
         rel="noreferrer"
-        className="absolute bottom-10 right-10 bg-[#25D366] hover:bg-[#1ebd5a] text-white p-4 rounded-full shadow-lg transition transform hover:scale-110 z-50 bg-blend-multiply opacity-95"
+        className="absolute bottom-10 right-10 bg-[#25D366] hover:bg-[#1ebd5a] text-white p-4 rounded-full shadow-lg transition transform hover:scale-110 z-50"
       >
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7">
-          <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.098.824z" />
-        </svg>
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.098.824z" /></svg>
       </a>
 
     </div>
