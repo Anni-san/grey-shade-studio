@@ -1,108 +1,98 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Search, ChevronDown } from 'lucide-react';
-
-const sliderImages = [
-  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069&auto=format&fit=crop", 
-  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop", 
-  "https://images.unsplash.com/photo-1600096194534-95cf5ece04cf?q=80&w=1976&auto=format&fit=crop"  
-];
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Facebook, Twitter, Instagram } from 'lucide-react';
 
 const Hero = () => {
-  const [currentImage, setCurrentImage] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImage((prev) => (prev === sliderImages.length - 1 ? 0 : prev + 1));
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
-
   return (
-    <div className="relative w-full h-screen bg-dark overflow-hidden">
+    <div className="relative w-full h-screen bg-black overflow-hidden flex items-center px-12 md:px-24">
       
-      {/* Right Panel: Clean Image Slider (60% width) */}
-      <div className="absolute top-0 right-0 w-[60%] h-full z-0">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={currentImage}
-            src={sliderImages[currentImage]}
-            alt="Studio Showcase"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        </AnimatePresence>
-        {/* Simple dark overlay to ensure text readability */}
-        <div className="absolute inset-0 bg-black/30"></div>
-      </div>
-
-      {/* Floating Navbar (Z-50) */}
-      <nav className="absolute top-0 w-full z-50 flex justify-between items-center px-12 py-8 text-white bg-gradient-to-b from-black/50 to-transparent">
-        <div className="flex items-center gap-4">
-          <div className="text-3xl font-black tracking-tighter">G</div>
-          <div className="w-[1px] h-8 bg-gray-500"></div>
-          <div className="flex flex-col justify-center">
-            <span className="text-base font-bold leading-none tracking-wide mb-1">Gray Shade Studios</span>
-            <span className="text-[0.6rem] tracking-[0.2em] text-gray-400 uppercase">Beyond Monochrome</span>
+      {/* Top Navigation */}
+      <nav className="absolute top-0 left-0 w-full flex justify-between items-center px-12 py-8 z-50">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full border border-white flex items-center justify-center">
+            <div className="w-4 h-4 rounded-full border border-gray-500"></div>
           </div>
+          <span className="font-bold tracking-tight text-xl font-sans">Sourabh's Studio</span>
         </div>
         
-        <div className="flex items-center gap-12">
-          <ul className="flex gap-8 text-sm font-medium tracking-wide">
-            <li className="cursor-pointer hover:text-gray-400 transition">Home</li>
-            <li className="cursor-pointer hover:text-gray-400 transition">About</li>
-            <li className="cursor-pointer hover:text-gray-400 transition">Blogs</li>
-            <li className="cursor-pointer hover:text-gray-400 transition">Contact Us</li>
-            <li className="cursor-pointer hover:text-gray-400 transition flex items-center gap-1">
-              Portfolio <ChevronDown size={16} />
-            </li>
-          </ul>
-          <Search className="cursor-pointer hover:text-gray-400 transition" size={20} />
+        <div className="flex items-center gap-10 text-sm font-medium text-gray-300 uppercase tracking-widest">
+          <a href="#" className="hover:text-white transition">About Us</a>
+          <a href="#" className="hover:text-white transition">Contact Us</a>
+          <a href="#" className="hover:text-white transition">Portfolio</a>
+          <a href="#" className="hover:text-white transition">Videos</a>
+          <a href="#" className="btn-outline-gold text-white">Book Now</a>
         </div>
       </nav>
 
-      {/* Clean, Breakout Typography (Z-10) */}
-      <div className="absolute top-1/2 -translate-y-1/2 left-[8%] z-10 w-full pointer-events-none">
-        <motion.div 
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.2 }}
-        >
-          <h1 className="text-[8rem] font-black leading-[1.05] tracking-tight text-white whitespace-nowrap uppercase">
-            Gray <span className="text-outline ml-4">Shade</span><br />
-            <span className="text-outline">Studios</span>
-          </h1>
-        </motion.div>
-      </div>
-
-      {/* Bottom Left Content (Z-20) */}
-      <div className="absolute bottom-12 left-[8%] z-20">
-        <div className="flex items-center gap-6 mb-8">
-          <div className="w-10 h-[2px] bg-white"></div>
-          <p className="uppercase tracking-widest text-sm font-bold text-white">
-            Capturing Masterpiece
-          </p>
-        </div>
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 w-full items-center z-10">
         
-        <div className="flex gap-6 text-gray-400 items-center">
-          <svg className="w-5 h-5 hover:text-white cursor-pointer transition fill-current" viewBox="0 0 24 24"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/></svg>
-          <svg className="w-5 h-5 hover:text-white cursor-pointer transition fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-          <svg className="w-5 h-5 hover:text-white cursor-pointer transition fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        {/* Left Side: Typography */}
+        <motion.div 
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-md"
+        >
+          <h1 className="text-7xl md:text-8xl font-black leading-none mb-6 font-sans">
+            Photography <br /> Studio
+          </h1>
+          
+          <h3 className="text-2xl font-bold mb-4">Who we are?</h3>
+          
+          <p className="text-gray-400 text-sm leading-relaxed mb-8">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi diam urna amet 
+            faucibus tortor amet proin. Eget bibendum elit nisi ridiculus massa ridiculus. 
+            Posuere semper posuere nam.
+          </p>
+
+          <button className="btn-outline-gold">
+            Read more about us
+          </button>
+
+          {/* Social Icons */}
+          <div className="flex gap-6 mt-12 text-gray-400">
+            <Facebook size={20} className="hover:text-white cursor-pointer transition" />
+            <Instagram size={20} className="hover:text-white cursor-pointer transition" />
+            <Twitter size={20} className="hover:text-white cursor-pointer transition" />
+          </div>
+        </motion.div>
+
+        {/* Right Side: Circular Image Composition */}
+        <div className="relative flex justify-center items-center h-full">
+          {/* Large Ring in Background */}
+          <div className="circle-bg opacity-50 scale-110"></div>
+          
+          {/* Main Subject Image */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
+            className="relative z-10 w-[450px] h-[550px] overflow-hidden"
+          >
+            <img 
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop" 
+              alt="Subject" 
+              className="w-full h-full object-cover filter grayscale"
+            />
+            {/* Dark Gradient over image bottom to blend */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+          </motion.div>
+
+          {/* Image Counter (02/03) */}
+          <div className="absolute right-0 top-1/2 translate-x-12 -translate-y-1/2 flex items-center gap-2">
+             <span className="text-5xl font-light">02</span>
+             <span className="text-gray-600 text-xl font-bold">/03</span>
+          </div>
         </div>
+
       </div>
 
-      {/* Floating WhatsApp Button */}
-      <a 
-        href="https://wa.me/1234567890" 
-        target="_blank" 
-        rel="noreferrer"
-        className="absolute bottom-10 right-10 bg-[#25D366] hover:bg-[#1ebd5a] text-white p-4 rounded-full shadow-lg transition transform hover:scale-110 z-50"
-      >
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.098.824z" /></svg>
-      </a>
+      {/* Floating Scroll Indicator (Optional, but adds to the look) */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30">
+        <div className="w-[1px] h-12 bg-white"></div>
+        <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+      </div>
 
     </div>
   );
