@@ -106,7 +106,7 @@ const Hero = () => {
           </svg>
         </div>
 
-      {/* Floating WhatsApp Button (Z-50) */}
+        </div>{/* Floating WhatsApp Button (Z-50) */}
       <a 
         href="https://wa.me/1234567890" 
         target="_blank" 
