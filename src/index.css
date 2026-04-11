@@ -45,5 +45,5 @@ nav a::after {
 nav a:hover::after {
   width: 100%;
   left: 0;
-  background: theme('colors.dark-accent'); /* Optional accent color from config */
+  background: white;
 }
