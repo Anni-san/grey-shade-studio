@@ -100,3 +100,18 @@ html, body {
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
   color: transparent;
 }
+.service-float-img {
+  pointer-events: none;
+  position: fixed;
+  width: 400px;
+  height: 500px;
+  z-index: 40;
+  overflow: hidden;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .group:hover .service-float-img {
+    display: block;
+  }
+}
