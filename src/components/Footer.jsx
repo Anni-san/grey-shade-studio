@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Footer = () => {
   const [time, setTime] = useState("");
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -17,91 +18,103 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="relative bg-[#020202] pt-40 pb-12 px-8 md:px-20 overflow-hidden font-sans border-t border-white/5">
+    <footer className="relative bg-[#020202] pt-20 pb-12 px-8 overflow-hidden font-sans">
       
-      {/* 1. THE BIG STATEMENT */}
-      <div className="relative z-10 flex flex-col items-center text-center mb-60">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <span className="text-[#b09476] text-[10px] tracking-[0.8em] uppercase font-black mb-12 block">
-            Initiate the Legacy
-          </span>
-          <a 
-            href="mailto:connect@grayshade.in" 
-            className="group relative inline-block text-[8vw] md:text-[10vw] font-black uppercase leading-[0.8] tracking-[ -0.05em] text-white"
-          >
-            <span className="relative z-10 transition-all duration-700 group-hover:text-[#b09476]">
-              Let's Talk.
-            </span>
-            {/* Hover Underline focus */}
-            <motion.div 
-              className="absolute bottom-4 left-0 w-0 h-2 bg-[#b09476] transition-all duration-700 group-hover:w-full"
-            />
-          </a>
-        </motion.div>
-      </div>
-
-      {/* 2. THE ARCHITECTURAL INFO BAR */}
-      <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-12 items-end border-b border-white/10 pb-20">
+      {/* 1. THE CAMERA LENS VIEW (CENTERPIECE) */}
+      <div className="relative flex flex-col items-center justify-center min-h-[80vh] z-10">
         
-        {/* TIME & LOCATION */}
-        <div className="md:col-span-4 space-y-10">
-          <div className="flex items-center gap-6">
-            <div className="w-2 h-2 bg-[#b09476] rounded-full animate-pulse" />
-            <div>
-              <span className="text-[9px] uppercase tracking-[0.4em] text-gray-500 font-bold block mb-1">Live in India</span>
-              <span className="text-2xl font-black text-white italic">{time}</span>
-            </div>
-          </div>
-          <div className="pl-8">
-            <span className="text-[9px] uppercase tracking-[0.4em] text-gray-500 font-bold block mb-1">Our Base</span>
-            <span className="text-lg text-white font-bold uppercase">New Delhi — HQ</span>
+        {/* Contact Text wrapping the Lens */}
+        <motion.div 
+          animate={{ opacity: isHovered ? 1 : 0.4, y: isHovered ? -20 : 0 }}
+          className="absolute top-0 text-center"
+        >
+          <span className="text-[#b09476] text-[10px] tracking-[0.8em] uppercase font-black mb-4 block">
+            Through the Lens
+          </span>
+          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">
+            Let's create legacy.
+          </h2>
+        </motion.div>
+
+        {/* THE LENS IRIS */}
+        <div 
+          className="relative group cursor-pointer mt-20"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {/* External Lens Rings */}
+          <motion.div 
+            animate={{ scale: isHovered ? 1.1 : 1, borderColor: isHovered ? '#b09476' : 'rgba(255,255,255,0.1)' }}
+            className="absolute -inset-10 border rounded-full transition-colors duration-700"
+          />
+          <motion.div 
+            animate={{ scale: isHovered ? 1.2 : 1 }}
+            className="absolute -inset-20 border border-white/5 rounded-full"
+          />
+
+          {/* Actual Lens Image */}
+          <div className="relative w-64 h-64 md:w-96 md:h-96 rounded-full overflow-hidden border-2 border-white/20 shadow-[0_0_100px_rgba(176,148,118,0.1)]">
+            <motion.img 
+              src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2071" 
+              className="w-full h-full object-cover"
+              animate={{ 
+                scale: isHovered ? 1.1 : 1,
+                filter: isHovered ? 'grayscale(0%) brightness(1)' : 'grayscale(100%) brightness(0.4)'
+              }}
+              transition={{ duration: 0.8 }}
+            />
+            
+            {/* Overlay Contact */}
+            <AnimatePresence>
+              {isHovered && (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center p-6 text-center backdrop-blur-sm"
+                >
+                  <a href="mailto:connect@grayshade.in" className="text-white font-black uppercase tracking-tighter text-xl hover:text-[#b09476]">
+                    Email Us
+                  </a>
+                  <div className="h-[1px] w-12 bg-[#b09476] my-4" />
+                  <span className="text-[10px] text-white/60 tracking-widest uppercase">New Delhi, India</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
 
-        {/* CENTER LOGO / BRANDING */}
-        <div className="md:col-span-4 flex justify-center py-10 md:py-0">
-           <div className="text-4xl font-black border-4 border-white p-4 tracking-tighter hover:bg-white hover:text-black transition-all cursor-default">
-             GS
-           </div>
-        </div>
-
-        {/* SOCIAL LINKS - RIGHT ALIGNED */}
-        <div className="md:col-span-4 flex flex-col md:items-end gap-3">
-          <span className="text-[9px] uppercase tracking-[0.4em] text-gray-500 font-bold mb-4">Social Matrix</span>
-          {["Instagram", "Behance", "Twitter", "Vimeo"].map((link) => (
-            <motion.a
-              key={link}
-              href="#"
-              whileHover={{ x: -10, color: "#b09476" }}
-              className="text-sm uppercase tracking-[0.3em] font-black text-white/40 hover:text-white transition-all"
-            >
-              {link}
-            </motion.a>
-          ))}
+        {/* BOTTOM INFO WRAPPING LENS */}
+        <div className="mt-24 flex gap-12 items-center text-center">
+          <div className="flex flex-col items-center">
+            <span className="text-[9px] uppercase tracking-widest text-gray-500 font-bold mb-1">Local Pulse</span>
+            <span className="text-xl font-black text-white italic">{time}</span>
+          </div>
         </div>
       </div>
 
-      {/* 3. GIANT BACKGROUND GHOST TEXT */}
-      <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-full pointer-events-none select-none opacity-[0.02]">
-        <h1 className="text-[25vw] font-black uppercase leading-none tracking-tighter text-center whitespace-nowrap">
+      {/* 2. ARCHITECTURAL SOCIAL RIBBON */}
+      <div className="mt-20 border-t border-white/10 pt-10 flex flex-wrap justify-center gap-x-16 gap-y-6">
+        {["Instagram", "Behance", "Twitter", "Vimeo"].map((link) => (
+          <a key={link} href="#" className="text-xs uppercase tracking-[0.4em] font-black text-white/30 hover:text-[#b09476] transition-all">
+            {link}
+          </a>
+        ))}
+      </div>
+
+      {/* 3. GIANT BACKGROUND GHOST */}
+      <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-full pointer-events-none select-none opacity-[0.02] z-0">
+        <h1 className="text-[20vw] font-black uppercase leading-none tracking-tighter text-center whitespace-nowrap">
           GRAY SHADE
         </h1>
       </div>
 
-      {/* 4. FINAL UTILITY BAR */}
-      <div className="relative z-10 mt-12 flex flex-col md:flex-row justify-between items-center gap-6 text-[8px] md:text-[9px] uppercase tracking-[0.5em] text-gray-600 font-bold">
-        <div className="flex gap-10">
-          <span className="text-[#b09476]">Studio Established 2026</span>
-          <span>© All Rights Reserved</span>
-        </div>
-        <div className="flex gap-10">
+      {/* 4. COPYRIGHT BAR */}
+      <div className="mt-16 flex flex-col md:flex-row justify-between items-center text-[9px] uppercase tracking-[0.5em] text-gray-600 font-bold">
+        <span>© 2026 Gray Shade Studios. India HQ.</span>
+        <div className="flex gap-10 mt-4 md:mt-0">
           <a href="#" className="hover:text-white transition-all">Privacy</a>
           <a href="#" className="hover:text-white transition-all">Terms</a>
-          <a href="#" className="hover:text-white transition-all italic text-[#b09476]">India</a>
         </div>
       </div>
     </footer>
