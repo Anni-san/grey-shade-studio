@@ -57,3 +57,17 @@ img {
   will-change: filter, transform;
   transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
+/* Cinematic masked text */
+.reveal-text {
+  background: linear-gradient(to right, #fff 50%, #333 50%);
+  background-size: 200% 100%;
+  background-position-x: 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: background-position-x 0.5s ease;
+}
+
+.reveal-text:hover {
+  background-position-x: 0%;
+}
