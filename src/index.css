@@ -71,3 +71,21 @@ img {
 .reveal-text:hover {
   background-position-x: 0%;
 }
+.project-number {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+  color: transparent;
+  font-family: serif;
+}
+
+.img-grain {
+  position: relative;
+}
+
+.img-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("https://www.transparenttextures.com/patterns/felt-tip.png");
+  opacity: 0.05;
+  pointer-events: none;
+}
