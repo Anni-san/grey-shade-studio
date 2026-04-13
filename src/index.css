@@ -89,3 +89,14 @@ img {
   opacity: 0.05;
   pointer-events: none;
 }
+html, body {
+  background-color: #020202;
+  margin: 0;
+  padding: 0;
+  /* Remove overflow-x: hidden from here if it exists */
+}
+
+.project-number {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+  color: transparent;
+}
