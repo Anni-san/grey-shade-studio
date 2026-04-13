@@ -16,6 +16,9 @@ const Perspective = () => {
   const rotateImg = useTransform(scrollYProgress, [0, 1], [-5, 5]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
+  // Connective line logic - grows as you scroll
+  const lineHeight = useTransform(scrollYProgress, [0.7, 1], ["0px", "300px"]);
+
   const handleMouseMove = (e) => {
     const { clientX, clientY } = e;
     setMousePos({ x: clientX, y: clientY });
@@ -29,7 +32,7 @@ const Perspective = () => {
     <section 
       ref={containerRef} 
       onMouseMove={handleMouseMove}
-      className="relative min-h-[150vh] bg-[#020202] flex flex-col justify-center items-center overflow-hidden py-40 select-none"
+      className="relative min-h-[120vh] bg-[#020202] flex flex-col justify-center items-center overflow-hidden py-40 select-none"
     >
       {/* 1. DYNAMIC SPOTLIGHT - The "Shadow" Interaction */}
       <div 
@@ -63,7 +66,6 @@ const Perspective = () => {
         </motion.div>
 
         <div className="my-20 relative">
-          {/* Decorative vertical line */}
           <div className="absolute left-1/2 -top-10 -translate-x-1/2 w-[1px] h-20 bg-gradient-to-t from-[#b09476] to-transparent" />
           
           <h3 className="text-3xl md:text-5xl font-serif italic text-[#b09476] max-w-4xl mx-auto leading-tight px-4">
@@ -95,19 +97,27 @@ const Perspective = () => {
         </h2>
       </motion.div>
 
-      {/* 5. INTERACTIVE CTA HOVER */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        className="mt-32 flex flex-col items-center gap-6 cursor-pointer group"
-      >
-        <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white transition-all duration-500">
-          <div className="w-1 h-1 bg-white group-hover:bg-black rounded-full" />
-        </div>
-        <span className="text-[10px] uppercase tracking-[0.5em] font-bold text-gray-500 group-hover:text-white transition-colors">
-          Discovery Process
-        </span>
-      </motion.div>
+      {/* 5. INTERACTIVE CTA HOVER & DYNAMIC CONNECTIVE LINE */}
+      <div className="relative mt-32 flex flex-col items-center">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="flex flex-col items-center gap-6 cursor-pointer group"
+        >
+          <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white transition-all duration-500">
+            <div className="w-1 h-1 bg-white group-hover:bg-black rounded-full" />
+          </div>
+          <span className="text-[10px] uppercase tracking-[0.5em] font-bold text-gray-500 group-hover:text-white transition-colors">
+            Discovery Process
+          </span>
+        </motion.div>
+
+        {/* This line bridges the gap to the Signature Collection */}
+        <motion.div 
+          style={{ height: lineHeight }}
+          className="absolute top-full mt-10 w-[1px] bg-gradient-to-b from-[#b09476] via-[#b09476]/50 to-transparent origin-top"
+        />
+      </div>
     </section>
   );
 };
