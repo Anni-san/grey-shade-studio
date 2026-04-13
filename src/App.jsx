@@ -1,11 +1,15 @@
 import React from 'react';
 import Hero from './components/Hero';
+import Perspective from './components/Perspective';
+// import SignatureCollection from './components/SignatureCollection'; (Next step)
 
 function App() {
   return (
-    <div className="min-h-screen bg-dark">
+    <main className="bg-[#020202]">
       <Hero />
-    </div>
+      <Perspective />
+      {/* <SignatureCollection /> */}
+    </main>
   );
 }
 
