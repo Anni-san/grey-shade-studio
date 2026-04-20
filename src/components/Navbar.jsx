@@ -16,30 +16,30 @@ const Navbar = ({ onBookClick, onPortalClick, isLoggedIn }) => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`fixed top-0 left-0 w-full z-[500] transition-all duration-500 px-8 md:px-12 py-6 flex justify-between items-center ${
-        scrolled ? 'bg-[#020202]/90 backdrop-blur-md border-b border-white/5' : 'bg-transparent'
+      className={`fixed top-0 left-0 w-full z-[1000] transition-all duration-500 px-6 md:px-12 py-5 flex justify-between items-center ${
+        scrolled ? 'bg-[#020202]/95 backdrop-blur-md border-b border-white/5 shadow-2xl' : 'bg-transparent'
       }`}
     >
-      {/* Brand Logo */}
-      <div className="text-white font-black text-xl uppercase tracking-[0.2em] cursor-pointer shrink-0">
+      {/* Brand Logo - Strict shrinking rules */}
+      <div className="text-white font-black text-lg md:text-xl uppercase tracking-[0.2em] cursor-pointer shrink-0 whitespace-nowrap">
         Gray <span className="text-[#b09476]">Shade.</span>
       </div>
 
-      {/* Center Links (Hidden on Mobile for now) */}
-      <div className="hidden lg:flex items-center gap-10 text-[10px] uppercase tracking-widest font-bold text-white/50">
+      {/* Center Links - Hidden on smaller screens to prevent collision */}
+      <div className="hidden xl:flex items-center gap-10 text-[10px] uppercase tracking-widest font-bold text-white/50 whitespace-nowrap">
         <a href="#about" className="hover:text-white transition-colors">About Us</a>
         <a href="#portfolio" className="hover:text-white transition-colors">Portfolio</a>
         <a href="#videos" className="hover:text-white transition-colors">Videos</a>
         <a href="#contact" className="hover:text-white transition-colors">Contact Us</a>
       </div>
 
-      {/* Right Side Actions (No Overlap) */}
-      <div className="flex items-center gap-6 shrink-0">
+      {/* Right Side Actions - Strict Flexbox to prevent stacking */}
+      <div className="flex items-center gap-4 shrink-0 whitespace-nowrap">
         
-        {/* Book Now Button - Solid White */}
+        {/* Book Now Button */}
         <button 
           onClick={onBookClick}
-          className="bg-white text-black px-6 py-2.5 text-[10px] uppercase tracking-widest font-black hover:bg-[#b09476] hover:text-white transition-colors duration-500"
+          className="bg-white text-black px-5 py-3 text-[10px] uppercase tracking-widest font-black hover:bg-[#b09476] hover:text-white transition-colors duration-500"
         >
           Book Now
         </button>
@@ -47,7 +47,7 @@ const Navbar = ({ onBookClick, onPortalClick, isLoggedIn }) => {
         {/* Dynamic Portal/Profile Button */}
         <button 
           onClick={onPortalClick}
-          className="group relative px-6 py-2.5 overflow-hidden rounded-full border border-white/20 hover:border-white transition-colors duration-500 flex items-center gap-2"
+          className="group relative px-5 py-3 overflow-hidden border border-white/20 hover:border-white transition-colors duration-500 flex items-center gap-2"
         >
           <div className="absolute inset-0 bg-white translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-[0.19,1,0.22,1]" />
           
