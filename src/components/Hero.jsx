@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Appointment from './Appointment';
 
 const sliderData = [
   { id: "01", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964" },
@@ -8,9 +7,9 @@ const sliderData = [
   { id: "03", img: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=1964" }
 ];
 
-const Hero = () => {
+// Added props to connect to the Auth flow in App.jsx
+const Hero = ({ onBookClick, onPortalClick, isLoggedIn }) => {
   const [index, setIndex] = useState(0);
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHoveringImage, setIsHoveringImage] = useState(false);
   const cursorRef = useRef(null);
@@ -31,26 +30,23 @@ const Hero = () => {
     };
   }, []);
 
-  // Solid White by default, Hollow Outline on hover
   const brandWordClass = "cursor-default transition-all duration-500 text-white hover:text-transparent hover:[text-stroke:1px_white] hover:[-webkit-text-stroke:1px_white]";
 
   return (
     <div className="relative w-full h-screen bg-[#020202] flex items-center px-8 md:px-24 overflow-hidden select-none font-sans">
-      {/* Custom Cursor - 40px */}
+      {/* Custom Cursor */}
       <div 
         ref={cursorRef} 
         className="custom-cursor hidden md:block" 
         style={{ width: '40px', height: '40px', marginTop: '-20px', marginLeft: '-20px' }}
       ></div>
 
-      <Appointment isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
-
       {/* Radial Glow */}
       <div className="absolute inset-0 pointer-events-none"
         style={{ background: `radial-gradient(circle at ${mousePos.x}px ${mousePos.y}px, rgba(176, 148, 118, 0.05) 0%, transparent 40%)` }}
       />
 
-      {/* NAV */}
+      {/* NAV - Updated with Portal Button and wired to App.jsx logic */}
       <nav className="absolute top-0 left-0 w-full flex justify-between items-center px-12 py-10 z-50">
         <div className="flex items-center gap-4 group cursor-pointer">
           <div className="text-2xl font-black border-2 border-white w-10 h-10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">G</div>
@@ -60,24 +56,34 @@ const Hero = () => {
           </div>
         </div>
         
-        <div className="hidden md:flex items-center gap-10 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">
+        <div className="hidden md:flex items-center gap-8 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">
           {['About Us', 'Contact Us', 'Portfolio', 'Videos'].map(item => (
             <a key={item} href="#" className="hover:text-white transition-all">{item}</a>
           ))}
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            onClick={() => setIsBookingOpen(true)}
-            className="bg-white text-black px-8 py-2 font-black border border-white hover:bg-transparent hover:text-white transition-all"
-          >
-            Book Now
-          </motion.button>
+          
+          <div className="flex items-center gap-4 ml-4">
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              onClick={onBookClick}
+              className="bg-white text-black px-8 py-2 font-black border border-white hover:bg-transparent hover:text-white transition-all"
+            >
+              Book Now
+            </motion.button>
+
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              onClick={onPortalClick}
+              className="bg-transparent text-white px-6 py-2 font-black border border-white/30 hover:border-white transition-all"
+            >
+              {isLoggedIn ? "Dashboard" : "Client Portal"}
+            </motion.button>
+          </div>
         </div>
       </nav>
 
-      {/* MAIN CONTENT */}
+      {/* MAIN CONTENT - Completely untouched */}
       <div className="flex justify-between w-full items-center z-10">
         
-        {/* LEFT: BRANDING (Restructured to 2 lines) */}
         <div className="relative max-w-4xl shrink-0">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <h1 className="text-[120px] font-black leading-[0.85] uppercase tracking-tighter mb-10">
@@ -96,10 +102,7 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* RIGHT: IMAGE AND SYNCED COUNTER */}
         <div className="relative flex justify-center items-center shrink-0 pr-12">
-          
-          {/* THE GHOST COUNTER - Synced Timing */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0">
             <AnimatePresence mode="wait">
               <motion.div
@@ -118,7 +121,6 @@ const Hero = () => {
             </AnimatePresence>
           </div>
 
-          {/* CIRCULAR IMAGE FRAME */}
           <div className="absolute w-[620px] h-[620px] border border-white/[0.03] rounded-full" />
           
           <motion.div 
@@ -146,7 +148,6 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* FOOTER SCROLL */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-30">
         <div className="relative w-[1px] h-24 bg-white/20 overflow-hidden">
           <motion.div 

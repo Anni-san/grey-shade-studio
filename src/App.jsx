@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Perspective from './components/Perspective';
 import SignatureCollection from './components/SignatureCollection';
@@ -7,8 +6,8 @@ import ServiceCanvas from './components/ServiceCanvas';
 import Process from './components/Process';
 import Footer from './components/Footer';
 import ClientPortal from './components/ClientPortal';
-import Appointment from './components/Appointment'; // Your Liquid Fill Booking Form
-import AuthModal from './components/AuthModal';     // The new gatekeeper
+import Appointment from './components/Appointment';
+import AuthModal from './components/AuthModal';
 
 function App() {
   // Global State Control
@@ -17,29 +16,26 @@ function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
-  // The Smart Routing Logic
+  // Smart Routing Logic
   const handleBookNowClick = () => {
     if (isLoggedIn) {
-      setIsBookingOpen(true); // Proceed straight to booking
+      setIsBookingOpen(true); 
     } else {
-      setIsAuthModalOpen(true); // Stop them and ask to login
+      setIsAuthModalOpen(true); 
     }
   };
 
   const handlePortalClick = () => {
     if (isLoggedIn) {
-      setIsPortalOpen(true); // Open Dashboard
+      setIsPortalOpen(true); 
     } else {
-      setIsAuthModalOpen(true); // Force login to see dashboard
+      setIsAuthModalOpen(true); 
     }
   };
 
   const handleSuccessfulLogin = () => {
     setIsLoggedIn(true);
     setIsAuthModalOpen(false);
-    
-    // Auto-direct them based on what they clicked to trigger the login
-    // If they clicked "Book Now", open the booking form automatically!
     setIsBookingOpen(true); 
   };
 
@@ -62,19 +58,19 @@ function App() {
       {isPortalOpen ? (
         <ClientPortal onSignOut={() => {
           setIsPortalOpen(false);
-          setIsLoggedIn(false); // Sign out wipes the state
+          setIsLoggedIn(false); 
         }} />
       ) : (
         <>
-          {/* THE NAV - Now aware of login state */}
-          <Navbar 
+          {/* Notice there is NO <Navbar /> here! 
+            The Hero component now handles its own internal navigation.
+          */}
+          <Hero 
             onBookClick={handleBookNowClick} 
-            onPortalClick={handlePortalClick}
+            onPortalClick={handlePortalClick} 
             isLoggedIn={isLoggedIn} 
           />
-
-          {/* THE PAGE CONTENT */}
-          <Hero />
+          
           <Perspective />
           <SignatureCollection />
           <ServiceCanvas />
