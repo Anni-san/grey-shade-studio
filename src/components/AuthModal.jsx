@@ -45,7 +45,7 @@ const AuthModal = ({ isOpen, onClose, onSuccess }) => {
         localStorage.setItem("jwtToken", data.token); 
         
         // Trigger the parent component to close modal/open booking
-        onSuccess(); 
+        onSuccess(email); 
         
         // Reset form
         setEmail('');

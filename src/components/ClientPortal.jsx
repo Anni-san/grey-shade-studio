@@ -29,8 +29,8 @@ const ClientPortal = ({ onSignOut }) => {
     const fetchBookings = async () => {
       try {
         // THE MAGIC: We use our 'api' waiter. It automatically attaches the JWT token!
-        // Right now, we fetch ALL bookings for the Admin view.
-        const response = await api.get('/admin/all-bookings');
+        // Changed to fetch ONLY the logged-in user's bookings
+        const response = await api.get('/appointments/my-bookings');
         
         setAppointments(response.data);
         
@@ -40,7 +40,7 @@ const ClientPortal = ({ onSignOut }) => {
         }
       } catch (err) {
         if (err.response?.status === 403) {
-           setError("Access Denied. You do not have Admin privileges.");
+           setError("Access Denied. You do not have privileges.");
         } else {
            setError("Cannot connect to server. Is Spring Boot running?");
         }
