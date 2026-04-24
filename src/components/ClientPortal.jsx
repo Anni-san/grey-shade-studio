@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, Clock, Camera, Image as ImageIcon, Download, LogOut, ChevronLeft, Check, Loader2 } from 'lucide-react';
+import api from '../api'; // IMPORT OUR NEW WAITER HERE
 
 // Mock Raw Images (We will keep these until we build the AWS S3 Image Storage backend!)
 const rawImages = [
@@ -15,7 +16,7 @@ const rawImages = [
 const ClientPortal = ({ onSignOut }) => {
   // Application State
   const [appointments, setAppointments] = useState([]);
-  const [activeOrder, setActiveOrder] = useState(null); // The specific booking we are looking at
+  const [activeOrder, setActiveOrder] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -26,38 +27,30 @@ const ClientPortal = ({ onSignOut }) => {
   // Fetch Data from Spring Boot when component loads
   useEffect(() => {
     const fetchBookings = async () => {
-      const token = localStorage.getItem("jwtToken");
-      if (!token) {
-        onSignOut();
-        return;
-      }
-
       try {
-        const response = await fetch("http://localhost:8080/api/appointments/my-bookings", {
-          headers: { "Authorization": `Bearer ${token}` }
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setAppointments(data);
-          
-          // If they have bookings, default to showing the first one
-          if (data.length > 0) {
-            setActiveOrder(data[0]); 
-          }
-        } else {
-          setError("Session expired.");
-          localStorage.removeItem("jwtToken");
+        // THE MAGIC: We use our 'api' waiter. It automatically attaches the JWT token!
+        // Right now, we fetch ALL bookings for the Admin view.
+        const response = await api.get('/admin/all-bookings');
+        
+        setAppointments(response.data);
+        
+        // If they have bookings, default to showing the first one
+        if (response.data.length > 0) {
+          setActiveOrder(response.data[0]); 
         }
       } catch (err) {
-        setError("Cannot connect to server.");
+        if (err.response?.status === 403) {
+           setError("Access Denied. You do not have Admin privileges.");
+        } else {
+           setError("Cannot connect to server. Is Spring Boot running?");
+        }
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchBookings();
-  }, [onSignOut]);
+  }, []);
 
   // Map Backend Enums to UI Steps
   const steps = [
@@ -78,11 +71,10 @@ const ClientPortal = ({ onSignOut }) => {
     );
   };
 
-  // Submit Logic (Later, this will send a PUT request to Spring Boot to update the status!)
+  // Submit Logic
   const submitSelection = () => {
     if (selectedPhotos.length > 0) {
       setIsSelectionRoom(false);
-      // For now, we simulate the update locally
       setActiveOrder(prev => ({ ...prev, status: "IN_EDITING" })); 
     }
   };
@@ -255,7 +247,7 @@ const ClientPortal = ({ onSignOut }) => {
                       
                       <div className="space-y-12 relative z-10">
                         {steps.map((step, index) => {
-                          const isCompleted = index <= currentStepIndex; // Updated logic to show progress!
+                          const isCompleted = index <= currentStepIndex;
                           const isActive = index === currentStepIndex;
                           const Icon = step.icon;
 
@@ -281,7 +273,7 @@ const ClientPortal = ({ onSignOut }) => {
                                   {step.label}
                                 </h3>
                                 
-                                {/* ACTION: PENDING PAYMENT (Because we haven't built Stripe yet!) */}
+                                {/* ACTION: PENDING PAYMENT */}
                                 {isActive && step.id === "PENDING_PAYMENT" && (
                                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-6">
                                     <p className="text-gray-400 text-sm mb-4 leading-relaxed max-w-md">
