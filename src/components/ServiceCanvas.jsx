@@ -65,18 +65,7 @@ const ServiceCanvas = () => {
             {/* THE FLOATING IMAGE REVEAL */}
             <AnimatePresence>
               {activeImg === service.img && (
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  exit={{ opacity: 0, scale: 0.8, rotate: 5 }}
-                  className="fixed pointer-events-none z-50 w-[350px] h-[450px] overflow-hidden rounded-xl border border-white/20 shadow-2xl"
-                  style={{ 
-                    left: mousePos.x + 20, 
-                    top: mousePos.y - 200,
-                  }}
-                >
-                  <img src={service.img} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="preview" />
-                </motion.div>
+                
               )}
             </AnimatePresence>
           </motion.div>
