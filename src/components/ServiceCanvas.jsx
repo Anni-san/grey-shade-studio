@@ -8,7 +8,12 @@ const services = [
     desc: "High-fashion aesthetics for personal branding and magazines.",
     img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964" 
   },
-  
+  { 
+    id: "02", 
+    title: "Cinematic Storytelling", 
+    desc: "Moving portraits and short-form film narratives.",
+    img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2059" 
+  },
   { 
     id: "03", 
     title: "Architectural Shades", 
