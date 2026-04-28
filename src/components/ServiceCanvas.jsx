@@ -84,7 +84,9 @@ const ServiceCanvas = () => {
       </div>
 
       {/* DECORATIVE BACKGROUND TEXT */}
-      
+      <div className="absolute bottom-10 right-10 pointer-events-none opacity-[0.02] select-none">
+        <h2 className="text-[250px] font-black uppercase leading-none">Services</h2>
+      </div>
     </section>
   );
 };
