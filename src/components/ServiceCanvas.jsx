@@ -14,12 +14,7 @@ const services = [
     desc: "Moving portraits and short-form film narratives.",
     img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2059" 
   },
-  { 
-    id: "03", 
-    title: "Architectural Shades", 
-    desc: "Capturing the soul of structures through light and geometry.",
-    img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070" 
-  }
+
 ];
 
 const ServiceCanvas = () => {
