@@ -187,7 +187,7 @@ const Appointment = ({ isOpen, onClose }) => {
                     className="w-32 h-32 rounded-full border border-white/20 flex flex-col items-center justify-center gap-2 transition-colors duration-500 disabled:opacity-50"
                   >
                     {isLoading ? (
-                      <Loader2 className="animate-spin" size={24} />
+                      
                     ) : (
                       <>
                         <span className="text-[9px] uppercase tracking-widest font-black">Book Now</span>
