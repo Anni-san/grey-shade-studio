@@ -190,7 +190,7 @@ const Appointment = ({ isOpen, onClose }) => {
                       
                     ) : (
                       <>
-                        <span className="text-[9px] uppercase tracking-widest font-black">Book Now</span>
+                        
                         <ArrowRight size={16} />
                       </>
                     )}
