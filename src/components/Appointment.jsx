@@ -213,7 +213,7 @@ const Appointment = ({ isOpen, onClose }) => {
                <div className="absolute inset-0 border border-[#b09476]/20 rounded-[30px] translate-x-3 translate-y-3"></div>
                <motion.div 
                  className="w-full h-full overflow-hidden rounded-[30px] relative z-10 border border-white/10 shadow-2xl"
-                 animate={{ scale: isHoveringImg ? 0.98 : 1 }}
+                 animate={{  }}
                >
                  <motion.img 
                   src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2071" 
