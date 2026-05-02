@@ -123,7 +123,11 @@ const Hero = ({ onBookClick, onPortalClick, isLoggedIn }) => {
 
           <div className="absolute w-[620px] h-[620px] border border-white/[0.03] rounded-full" />
           
-          
+          <motion.div 
+            onMouseEnter={() => setIsHoveringImage(true)}
+            onMouseLeave={() => setIsHoveringImage(false)}
+            className="relative z-10 w-[500px] h-[500px] overflow-hidden rounded-full border-[2px] border-white/10 shadow-[0_0_100px_rgba(0,0,0,1)] cursor-pointer"
+          >
             <AnimatePresence mode="wait">
               <motion.img 
                 key={index} 
