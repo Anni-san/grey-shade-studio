@@ -34,7 +34,7 @@ const Navbar = ({ onBookClick, onPortalClick, isLoggedIn }) => {
       </div>
 
       {/* Right Side Actions - Strict Flexbox to prevent stacking */}
-      
+      <div className="flex items-center gap-4 shrink-0 whitespace-nowrap">
         
         {/* Book Now Button */}
         <button 
