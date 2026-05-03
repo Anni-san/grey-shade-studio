@@ -39,7 +39,6 @@ const Navbar = ({ onBookClick, onPortalClick, isLoggedIn }) => {
         {/* Book Now Button */}
         <button 
           onClick={onBookClick}
-          className="bg-white text-black px-5 py-3 text-[10px] uppercase tracking-widest font-black hover:bg-[#b09476] hover:text-white transition-colors duration-500"
         >
           Book Now
         </button>
