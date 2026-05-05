@@ -40,7 +40,7 @@ const Navbar = ({ onBookClick, onPortalClick, isLoggedIn }) => {
         <button 
           onClick={onBookClick}
         >
-          Book Here
+          Book Now
         </button>
 
         {/* Dynamic Portal/Profile Button */}
