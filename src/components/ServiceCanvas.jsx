@@ -17,7 +17,7 @@ const services = [
   { 
     id: "03", 
     title: "Architectural Shades", 
-    desc: "Capturing the soul of structures through light and geometry .",
+    desc: "Capturing the soul of structures through light and geometry.",
     img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070" 
   }
 ];
