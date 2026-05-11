@@ -295,7 +295,7 @@ const ClientPortal = ({ onSignOut }) => {
                                       onClick={() => setIsSelectionRoom(true)}
                                       className="bg-white text-black px-8 py-3 text-xs uppercase tracking-widest font-black hover:bg-[#b09476] hover:text-white transition-colors duration-300"
                                     >
-                                      Enter Selection  Room
+                                      Enter Selection Room
                                     </button>
                                   </motion.div>
                                 )}
