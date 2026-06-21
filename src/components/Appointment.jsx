@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight, Loader2 } from 'lucide-react';
+import api from '../api'; // 1. IMPORT OUR WAITER
 
-const Appointment = ({ isOpen, onClose }) => {
+// 2. ADD onSuccess TO THE PROPS
+const Appointment = ({ isOpen, onClose, onSuccess }) => {
   const [isHoveringImg, setIsHoveringImg] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // 1. STATE FOR FORM DATA
-  // Matches the 'BookingRequest' record in your Spring Boot controller
   const [formData, setFormData] = useState({
     shootType: '',
     shootDate: '',
@@ -16,51 +16,38 @@ const Appointment = ({ isOpen, onClose }) => {
     specialNotes: ''
   });
 
-  // 2. HANDLER FOR INPUT CHANGES
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 3. SUBMIT TO SPRING BOOT
+  // 3. UPDATED SUBMIT FUNCTION
   const handleBookingSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    const token = localStorage.getItem("jwtToken");
-
-    if (!token) {
-      alert("Please log in first to book a session.");
-      setIsLoading(false);
-      return;
-    }
-
     try {
-      const response = await fetch("http://localhost:8080/api/appointments/book", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(formData),
-      });
+      // We use our 'api' instance, so we don't need to manually fetch the token!
+      const response = await api.post('/appointments/book', formData);
 
-      if (response.ok) {
-        const message = await response.text();
-        alert("Success: " + message);
-        onClose(); // Close the modal on success
-      } else {
-        const errorData = await response.json();
-        alert("Booking failed: " + (errorData.message || "Unknown error"));
+      if (response.status === 200) {
+        // Reset the form
+        setFormData({ shootType: '', shootDate: '', shootTime: '', location: '', specialNotes: '' });
+        
+        // Trigger the seamless transition to the Client Portal!
+        if (onSuccess) onSuccess(); 
       }
     } catch (error) {
       console.error("Connection error:", error);
-      alert("Cannot connect to server. Ensure Spring Boot is running.");
+      if (error.response?.status === 403) {
+        alert("Your session expired. Please log in again.");
+      } else {
+        alert("Booking failed: " + (error.response?.data?.message || "Ensure Spring Boot is running."));
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { 
@@ -142,7 +129,7 @@ const Appointment = ({ isOpen, onClose }) => {
                       required
                       value={formData.shootDate}
                       onChange={handleChange}
-                      className="w-full bg-transparent border-b border-white/10 py-3 outline-none font-sans text-lg placeholder:text-white/20 focus:border-[#b09476] transition-colors" 
+                      className="w-full bg-transparent border-b border-white/10 py-3 outline-none font-sans text-lg placeholder:text-white/20 focus:border-[#b09476] transition-colors [color-scheme:dark]" 
                     />
                   </motion.div>
                   <motion.div variants={itemVariants} className="flex-1">
@@ -152,7 +139,7 @@ const Appointment = ({ isOpen, onClose }) => {
                       required
                       value={formData.shootTime}
                       onChange={handleChange}
-                      className="w-full bg-transparent border-b border-white/10 py-3 outline-none font-sans text-lg placeholder:text-white/20 focus:border-[#b09476] transition-colors" 
+                      className="w-full bg-transparent border-b border-white/10 py-3 outline-none font-sans text-lg placeholder:text-white/20 focus:border-[#b09476] transition-colors [color-scheme:dark]" 
                     />
                   </motion.div>
                 </div>
