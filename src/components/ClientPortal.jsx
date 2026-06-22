@@ -84,6 +84,55 @@ const ClientPortal = ({ onSignOut }) => {
     onSignOut();
   };
 
+  // ==========================================
+  // PAYMENT INTEGRATION
+  // ==========================================
+  const handlePayment = async (bookingAmount) => {
+    try {
+      // 1. Ask Spring Boot for a secure Order ID
+      const response = await api.post('/payments/create-order', { amount: 500 });
+      
+      // Parse the stringified JSON from Spring Boot
+      const orderData = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+
+      // 2. Configure the Razorpay Checkout Window
+      const options = {
+        key: "rzp_test_T4WnuCviTuR8s5", // ⚠️ PASTE YOUR PUBLIC TEST KEY HERE
+        amount: orderData.amount, // In paise (smallest currency unit)
+        currency: orderData.currency,
+        name: "GreyShade Studio",
+        description: "Photoshoot Deposit Secure Payment",
+        order_id: orderData.id, // The secure ID from Spring Boot
+        
+        // 3. What happens when the payment is successful?
+        handler: async function (response) {
+          console.log("Success Details:", response);
+          alert(`Payment Successful! Payment ID: ${response.razorpay_payment_id}`);
+          
+          // Next step: We will call Spring Boot here to update the database to 'CONFIRMED'
+        },
+        
+        // Make it match your luxurious dark theme!
+        theme: {
+          color: "#b09476" 
+        }
+      };
+
+      // 4. Open the Razorpay Window
+      const rzp = new window.Razorpay(options);
+      
+      rzp.on('payment.failed', function (response){
+        alert("Payment Failed. Reason: " + response.error.description);
+      });
+
+      rzp.open();
+
+    } catch (error) {
+      console.error("Payment initialization failed:", error);
+      alert("Could not load payment gateway. Ensure Spring Boot is running.");
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#050505] flex flex-col items-center justify-center text-[#b09476]">
@@ -279,8 +328,11 @@ const ClientPortal = ({ onSignOut }) => {
                                     <p className="text-gray-400 text-sm mb-4 leading-relaxed max-w-md">
                                       Your booking is logged. To confirm your date on the calendar, a deposit is required.
                                     </p>
-                                    <button className="bg-white text-black px-6 py-2 text-[10px] uppercase tracking-widest font-black hover:bg-[#b09476] hover:text-white transition-colors duration-300">
-                                      Pay Deposit (Coming Soon)
+                                    <button 
+                                      onClick={() => handlePayment(activeOrder.quotedPrice)}
+                                      className="bg-white text-black px-6 py-2 text-[10px] uppercase tracking-widest font-black hover:bg-[#b09476] hover:text-white transition-colors duration-300"
+                                    >
+                                      Pay Deposit (₹500)
                                     </button>
                                   </motion.div>
                                 )}
