@@ -97,7 +97,7 @@ const ClientPortal = ({ onSignOut }) => {
 
       // 2. Configure the Razorpay Checkout Window
       const options = {
-        key: "", // ⚠️ PASTE YOUR PUBLIC TEST KEY HERE
+        key: "rzp_test_T4WnuCviTuR8s5", // ⚠️ PASTE YOUR PUBLIC TEST KEY HERE
         amount: orderData.amount, // In paise (smallest currency unit)
         currency: orderData.currency,
         name: "GreyShade Studio",
